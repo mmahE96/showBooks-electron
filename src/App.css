@@ -1,0 +1,52 @@
+* {
+	font-family: 'Inter', sans-serif;
+}
+
+.main {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 40px;
+
+}
+
+.title {
+	font-size: large;
+	
+}
+
+.setting-field{
+
+
+}
+
+.btn {
+	border: 1px solid #888;
+	margin: 10px;
+}
+
+.btn:hover {
+	background-color: grey;
+
+}
+
+.results-field{
+
+}
+
+.results-table {
+	font-size: 0.9em;
+	border-collapse: collapse;
+	min-width: 600px;
+}
+
+.btn-izn{
+	padding: 2px 22px 2px 22px;		
+	border: 1px solid #888;
+	background-color: white;
+
+} 
+.btn-izn:hover{
+	background-color: grey;
+}
+
