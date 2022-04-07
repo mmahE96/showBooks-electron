@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 import LogItem from './LogItem'
+import client from '../../config/postgres'
 
 const App = () => {
 
@@ -14,6 +15,22 @@ const App = () => {
 		iznajmljeno: "0",
 	  }])
 
+	function getData() {
+		client.connect()
+
+		const data = client.query('Select * from users', (err, res) => {
+			if(!err){
+				console.log(res.rows);
+			}else {
+				console.log(err.message);
+			}
+			client.end;
+		})
+
+
+		console.log(data)
+	}
+
 	const [books, setBooks] = useState([
 		{
 		  _id: 1,
@@ -21,6 +38,8 @@ const App = () => {
 		  naslov: 'low',
 		  prezimeAutora: 'Brad',
 		  iznajmljeno: "da",
+		  iznajmljivac:"Kemo",
+		  datumIzdavanja:"21.02.2021"
 		},
 		{
 		  _id: 2,
@@ -28,6 +47,8 @@ const App = () => {
 		  naslov: 'moderate',
 		  prezimeAutora: 'Kate',
 		  iznajmljeno: "ne",
+		  iznajmljivac:"Nema",
+		  datumIzdavanja:"Nema"
 		},
 		{
 		  _id: 3,
@@ -35,6 +56,8 @@ const App = () => {
 		  naslov: 'high',
 		  prezimeAutora: 'John',
 		  iznajmljeno: "da",
+		  iznajmljivac:"Ratko",
+		  datumIzdavanja:"21.02.2021"
 		},
 	  ])
 	  console.log(books)
@@ -42,6 +65,9 @@ const App = () => {
 		<div className='main'>
 		<div className='title'>
 			<h1>Dzamijska biblioteka</h1>
+			<p>Omogućiti da se doda kome je knjiga izdata i datum izdavanja</p>
+
+			<button onClick={() => getData()}>Get data</button>
 		</div>
 		<div className='setting-field'>		
 
@@ -67,6 +93,8 @@ const App = () => {
             <th>Ime autora</th>
             <th>Prezime autora</th>
             <th>Iznajmljena</th>
+			<th>Promjeni</th>
+			<th>*</th>
            
           </tr>
         </thead>

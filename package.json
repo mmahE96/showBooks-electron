@@ -21,6 +21,7 @@
     "postpackage": "electron-packager ./ --out=./release-builds"
   },
   "dependencies": {
+    "pg": "^8.7.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
