@@ -71,11 +71,16 @@ const App = () => {
 			<h1>Dzamijska biblioteka</h1>
 			<p>Omogućiti da se doda kome je knjiga izdata i datum izdavanja</p>
 
-			<button onClick={() => getData()}>Get data</button>
+			
 		</div>
 		<div className='setting-field'>		
 
-			<button className='btn' onClick={() => setToggle(!toggle)}>Pregled knjiga</button>
+			<button className='btn' onClick={() => {
+				getData()
+				setToggle(!toggle)
+				
+				
+				}}>Pregled knjiga</button>
 			<br />
 			
 
@@ -97,8 +102,9 @@ const App = () => {
             <th>Ime autora</th>
             <th>Prezime autora</th>
             <th>Iznajmljena</th>
+			<th>Datum izdavanja</th>
 			<th>Promjeni</th>
-			<th>*</th>
+			
            
           </tr>
         </thead>
