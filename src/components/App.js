@@ -63,6 +63,27 @@ const App = () => {
 
 	}
 
+	function searchPattern(){
+
+		client.connect().then(() => console.log('connected'))
+		.catch(err => console.error('connection error', err.stack))
+
+		const data = client.query("Select * from books where naslov LIKE $1", ['%Svoj%'], (err, res) => {
+			if(!err){
+				console.log("log pattern", res.rows);
+				setBooks(res.rows)
+				
+			}else {
+				console.log(err.message);
+			}
+			client.end;
+		})
+		console.log("just logging data", data)
+		
+		
+
+	}
+
 	
 	  console.log("last log", books)
 	return (
@@ -84,7 +105,10 @@ const App = () => {
 			<br />
 			
 
-			<button className='btn' >Pretrazuj knjige</button>
+			<button className='btn' onClick={() => {searchPattern()
+			setToggle(!toggle)}
+			
+			}>Pretrazuj knjige</button>
 			<input placeholder='Unesi ime knjige/autora' size={80}></input>
 			
 			
