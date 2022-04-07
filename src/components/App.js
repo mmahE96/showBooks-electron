@@ -5,32 +5,6 @@ import client from '../../config/postgres'
 
 const App = () => {
 
-	const [toggle, setToggle] = useState(false)
-
-	const [defaultState, setdefaultState]  = useState([{
-		_id: 0,
-		imeAutora: '0',
-		naslov: '0',
-		prezimeAutora: '0',
-		iznajmljeno: "0",
-	  }])
-
-	function getData() {
-		client.connect()
-
-		const data = client.query('Select * from users', (err, res) => {
-			if(!err){
-				console.log(res.rows);
-			}else {
-				console.log(err.message);
-			}
-			client.end;
-		})
-
-
-		console.log(data)
-	}
-
 	const [books, setBooks] = useState([
 		{
 		  _id: 1,
@@ -60,7 +34,37 @@ const App = () => {
 		  datumIzdavanja:"21.02.2021"
 		},
 	  ])
-	  console.log(books)
+
+	const [toggle, setToggle] = useState(false)
+
+	const [defaultState, setdefaultState]  = useState([{
+		_id: 0,
+		imeAutora: '0',
+		naslov: '0',
+		prezimeAutora: '0',
+		iznajmljeno: "0",
+	  }])
+
+	 function getData() {
+		console.log("Default books state", books)
+		client.connect().then(() => console.log('connected'))
+		.catch(err => console.error('connection error', err.stack))
+
+		const data = client.query('Select * from books', (err, res) => {
+			if(!err){
+				console.log("log", res.rows);
+				setBooks(res.rows)
+			}else {
+				console.log(err.message);
+			}
+			client.end;
+		})
+		console.log(books)
+
+	}
+
+	
+	  console.log("last log", books)
 	return (
 		<div className='main'>
 		<div className='title'>
