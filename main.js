@@ -2,6 +2,8 @@ const path = require('path')
 const url = require('url')
 const { app, BrowserWindow } = require('electron')
 
+process.env.NODE_ENV === 'production'
+
 let mainWindow
 
 let isDev = false
@@ -17,7 +19,7 @@ function createMainWindow() {
 	mainWindow = new BrowserWindow({
 		width: 1100,
 		height: 800,
-		show: false,
+		show: true,
 		icon: `${__dirname}/assets/icon.png`,
 		webPreferences: {
 			nodeIntegration: true,
