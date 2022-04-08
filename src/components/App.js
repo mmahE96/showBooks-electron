@@ -8,40 +8,41 @@ const App = () => {
 	const [books, setBooks] = useState([
 		{
 		  _id: 1,
-		  imeAutora: 'This is log one',
+		  ime_autora: 'This is log one',
 		  naslov: 'low',
-		  prezimeAutora: 'Brad',
+		  prezime_autora: 'Brad',
 		  iznajmljeno: "da",
 		  iznajmljivac:"Kemo",
-		  datumIzdavanja:"21.02.2021"
+		  datum_izdavanja:"21.02.2021"
 		},
 		{
 		  _id: 2,
-		  imeAutora: 'This is log two',
+		  ime_autora: 'This is log two',
 		  naslov: 'moderate',
-		  prezimeAutora: 'Kate',
+		  prezime_autora: 'Kate',
 		  iznajmljeno: "ne",
 		  iznajmljivac:"Nema",
-		  datumIzdavanja:"Nema"
+		  datum_izdavanja:"Nema"
 		},
 		{
 		  _id: 3,
-		  imeAutora: 'This is log three',
+		  ime_autora: 'This is log three',
 		  naslov: 'high',
-		  prezimeAutora: 'John',
+		  prezime_autora: 'John',
 		  iznajmljeno: "da",
 		  iznajmljivac:"Ratko",
-		  datumIzdavanja:"21.02.2021"
+		  datum_izdavanja:"21.02.2021"
 		},
 	  ])
 
 	const [toggle, setToggle] = useState(false)
+	const [searchWord, setSearchWord] = useState("")
 
 	const [defaultState, setdefaultState]  = useState([{
 		_id: 0,
-		imeAutora: '0',
+		ime_autora: '0',
 		naslov: '0',
-		prezimeAutora: '0',
+		prezime_autora: '0',
 		iznajmljeno: "0",
 	  }])
 
@@ -67,8 +68,9 @@ const App = () => {
 
 		client.connect().then(() => console.log('connected'))
 		.catch(err => console.error('connection error', err.stack))
-
-		const data = client.query("Select * from books where naslov LIKE $1", ['%Svoj%'], (err, res) => {
+		//ILIKE commands postgress to be case insensitive, LIKE will be case sensitive when searching through DB
+		//naslov || ime_autora || prezime_autora || iznajmljivac this part is showing all table columns that being searched with pattern
+		const data = client.query("Select * from books where naslov || ime_autora || prezime_autora || iznajmljivac ILIKE $1", [`%${searchWord}%`], (err, res) => {
 			if(!err){
 				console.log("log pattern", res.rows);
 				setBooks(res.rows)
@@ -82,6 +84,10 @@ const App = () => {
 		
 		
 
+	}
+
+	function getInput(val){
+		setSearchWord(val.target.value)
 	}
 
 	
@@ -109,7 +115,7 @@ const App = () => {
 			setToggle(!toggle)}
 			
 			}>Pretrazuj knjige</button>
-			<input placeholder='Unesi ime knjige/autora' size={80}></input>
+			<input placeholder='Unesi ime knjige/autora' size={80} onChange={getInput}></input>
 			
 			
 			<hr />
